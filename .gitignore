@@ -25,3 +25,16 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+
+# cpcache
+.cpcache
+
+# calva
+.calva
+
+# clj kondo
+.clj-kondo
+
+# lsp
+.lsp
