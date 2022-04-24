@@ -1,0 +1,419 @@
+[; 1. student attributes
+ {:db/ident :student/id
+  :db/doc "The id of the account"
+  :db/unique :db.unique/identity
+  :db/valueType :db.type/uuid
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :student/first-name
+  :db/doc "The first name of the account"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :student/last-name
+  :db/doc "The last name of the account"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :student/picture-url
+  :db/doc "The picture-url of the account"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :student/school
+  :db/doc "School of the student"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :student/conversations
+  :db/doc "The conversations of the account"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :student/skills
+  :db/doc "The skills of the student"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :student/courses
+  :db/doc "The courses of the student"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :student/groups
+  :db/doc "List of all the group of the student"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+
+ ;; 2. School attributes
+ {:db/ident :school/id
+  :db/doc "The id of the school"
+  :db/unique :db.unique/identity
+  :db/valueType :db.type/uuid
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :school/name
+  :db/doc "The name of the school"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :school/address
+  :db/doc "The address of the school"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/one}
+
+ ;; ===== 3. Address attributes ======
+ {:db/ident :address/id
+  :db/doc "The id of the address"
+  :db/unique :db.unique/identity
+  :db/valueType :db.type/uuid
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :address/street1
+  :db/doc "Street 1 of the address"
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :address/street2
+  :db/doc "Street 2 of the address"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :address/province
+  :db/doc "Province of address"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :address/country
+  :db/doc "The country of the address"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :address/postal
+  :db/doc "The postal code of the address"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ; 4. course attributes
+ {:db/ident :course/id
+  :db/doc "The id of the course"
+  :db/unique :db.unique/identity
+  :db/valueType :db.type/uuid
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :course/creator
+  :db/doc "The owner of the learning path"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :course/name
+  :db/doc "The name of the course"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :course/objectives
+  :db/doc "The objectives of the course"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :course/favourite-count
+  :db/doc "The number of times a course has been marked as favourite"
+  :db/valueType :db.type/long
+  :db/noHistory true
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :course/image-url
+  :db/doc "The url of the course image"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :course/public?
+  :db/doc "The flag if a course is public or draft"
+  :db/valueType :db.type/boolean
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :course/sections
+  :db/doc "The sections of the course"
+  :db/isComponent true
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :course/prequisites
+  :db/doc "The prerequisites of the course"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+
+ ; 11. objective attributes
+ {:db/ident :objective/id
+  :db/doc "The id of the objective"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :objective/text
+  :db/doc "The text of the objective"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+; 5. section attributes
+ {:db/ident :section/id
+  :db/doc "The id of the section"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :section/description
+  :db/doc "The description of the section"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :section/sort-order
+  :db/doc "The sort order of the section"
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :section/challenges
+  :db/doc "The challenges of the section"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :section/lessons
+  :db/doc "The challenges of the section"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/one}
+
+ ;; 12. lessons
+ {:db/ident :lesson/id
+  :db/doc "The id of the lesson"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ ;; Future Work: Chellange Builder: An interactive chellange builder
+ {:db/ident :lesson/type
+  :db/doc "Type of the lesson"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :lesson/context
+  :db/doc "Context of the lesson"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :lesson/title
+  :db/doc "Title of the lesson"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :lesson/description
+  :db/doc "Title of the lesson"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; 14. Simulation Examples
+ ;; - university application
+ ;; - visa application
+ ;; - space exploration
+ ;; - hostel management
+ ;; - hotel management
+ ;; - air traffic controller
+ ;; - erasmus
+ ;; - bhutan
+
+ ;; 13. Simulations
+ {:db/ident :simulation/id
+  :db/doc "The id of the simulation"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :simulation/title
+  :db/doc "The title of the simulation"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :simulation/objectives
+  :db/doc "The objectives of the simulation"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+ {:db/ident :simulation/level
+  :db/doc "The level of the simulation"
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :simulation/acts
+  :db/doc "The acts of the simulation"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+ {:db/ident :simulation/resources
+  :db/doc "The resources of the simulation"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+
+ ;; 14. Simulation Acts
+ {:db/ident :act/id
+  :db/doc "The id of the act"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :act/title
+  :db/doc "The title of the act"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :act/scripts
+  :db/doc "The scripts of the act"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many}
+
+ ;; 15. Scripts
+ {:db/ident :script/id
+  :db/doc "The id of the script"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :script/title
+  :db/doc "The title of the script"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident :script/character
+  :db/doc "Character of the script"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many}
+ ;; Possible Types: Dialog, Questions, Reactions, Poll, Popup, Dropdown, Simulation
+ {:db/ident :script/type
+  :db/doc "Actor of the script"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many}
+
+
+ ; 6. challenge attributes
+ {:db/ident :challenge/id
+  :db/doc "The id of the challenge"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ ;; Future Work: Chellange Builder: An interactive chellange builder
+ {:db/ident :challenge/type
+  :db/doc "Type of the challenge"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :challenge/context
+  :db/doc "Context of the challenge"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :challenge/title
+  :db/doc "Title of the challenge"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :challenge/description
+  :db/doc "Title of the challenge"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :challenge/tags
+  :db/doc "Tags of the challenge"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :challenge/choices
+  :db/doc "Choices of the challange"
+  :db/valueType :db.type/ref
+  :db/isComponent true
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :challenge/solutions
+  :db/doc "Solutions to the challange"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :challenge/rewards
+  :db/doc "Rewards to the challange"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/many}
+
+ ; 7. choice attributes
+ {:db/ident :choice/id
+  :db/doc "The id of the choice"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :choice/title
+  :db/doc "Title of the choice"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :choice/value
+  :db/doc "Value of the choice"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; ===== Social and Communication ========
+ ; 8 group attributes
+ {:db/ident :group/id
+  :db/doc "The id of the group"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :group/name
+  :db/doc "Name of the group"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+  ; 9 conversation attributes
+ {:db/ident :conversation/id
+  :db/doc "The id of the conversation"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :conversation/messages
+  :db/doc "The messages of the conversation"
+  :db/isComponent true
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+
+ {:db/ident :conversation/participants
+  :db/doc "The participants (account) ids of the conversation"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}
+
+ ; 10 message attributes
+ {:db/ident :message/id
+  :db/doc "The id of the message"
+  :db/valueType :db.type/uuid
+  :db/unique :db.unique/identity
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :message/body
+  :db/doc "The body of the message"
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :message/owner
+  :db/doc "The owner's id of the message"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :message/created-at
+  :db/doc "The created at of the message"
+  :db/valueType :db.type/instant
+  :db/cardinality :db.cardinality/one}
+
+ {:db/ident :message/read-by
+  :db/doc "The message ready by flag"
+  :db/valueType :db.type/ref
+  :db/cardinality :db.cardinality/many}]
